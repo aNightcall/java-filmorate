@@ -17,54 +17,34 @@ import java.util.Map;
 
 @Slf4j
 @RestController
+@RequestMapping("/films")
 public class FilmController {
     private Map<Integer, Film> films = new HashMap<>();
     private static int id = 1;
 
-    @PostMapping("/films")
+    @PostMapping
     public ResponseEntity<Film> create(@Valid @RequestBody Film film) {
-        try {
-            validateFilm(film);
-            film.setId(id);
-            films.put(id++, film);
-            log.info("Фильм {} успешно добавлен.", film.getName());
-        } catch (ValidationException e) {
-            log.info("Не получилось добавить фильм {}. {}", film.getName(), e.getMessage());
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(film);
-        }
+        film.setId(id);
+        films.put(id++, film);
+        log.info("Фильм {} успешно добавлен.", film.getName());
         return ResponseEntity.status(HttpStatus.OK).body(film);
     }
 
-    @PutMapping("/films")
+    @PutMapping
     public ResponseEntity<Film> update(@Valid @RequestBody Film film) {
-        try {
-            validateFilm(film);
-            if (films.containsKey(film.getId())) {
-                films.remove(film.getId());
-                films.put(film.getId(), film);
-                log.info("Фильм {} успешно обновлён.", film.getName());
-            } else {
-                throw new ValidationException("Такой фильм не был добавлен.");
-            }
-        } catch (ValidationException e) {
-            log.info("Не получилось обновить фильм {}. {}", film.getName(), e.getMessage());
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(film);
+        if (films.containsKey(film.getId())) {
+            films.remove(film.getId());
+            films.put(film.getId(), film);
+            log.info("Фильм {} успешно обновлён.", film.getName());
+        } else {
+            throw new ValidationException("Такой фильм не был добавлен.");
         }
         return ResponseEntity.status(HttpStatus.OK).body(film);
     }
 
-    @GetMapping("/films")
+    @GetMapping
     public List<Film> findAll() {
         return new ArrayList<>(films.values());
     }
 
-    public void validateFilm(Film film) throws ValidationException {
-        if (film.getDescription().length() > 200) {
-            throw new ValidationException("Описание фильма не может содержать больше 200 символов.");
-        } else if (film.getReleaseDate().isBefore(LocalDate.of(1895, 12, 28))) {
-            throw new ValidationException("Дата релиза фильма не может быть раньше первого в истории кинопоказа.");
-        } else if (film.getDuration() < 0) {
-            throw new ValidationException("Продолжительность фильма не может быть отрицательной");
-        }
-    }
 }
