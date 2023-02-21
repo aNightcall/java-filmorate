@@ -22,10 +22,4 @@ public class ErrorHandler {
     public ErrorResponse noFriendsHandler(NoFriendsException e) {
         return new ErrorResponse(String.format("У пользователя с id %d нет друзей.", e.getParameter()));
     }
-
-    @ExceptionHandler
-    @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
-    public ErrorResponse throwableHandler(Throwable e) {
-        return new ErrorResponse("Проищошла внутренняя ошибка");
-    }
 }
