@@ -24,42 +24,42 @@ public class UserController {
     }
 
     @PostMapping
-    public ResponseEntity<User> addUser(@Valid @RequestBody User user) {
-        return ResponseEntity.status(HttpStatus.OK).body(service.addUser(user));
+    public User addUser(@Valid @RequestBody User user) {
+        return service.addUser(user);
     }
 
     @PutMapping
-    public ResponseEntity<User> updateUser(@Valid @RequestBody User user) {
-        return ResponseEntity.status(HttpStatus.OK).body(service.updateUser(user));
+    public User updateUser(@Valid @RequestBody User user) {
+        return service.updateUser(user);
     }
 
     @GetMapping
-    public ResponseEntity<List<User>> getAllUsers() {
-        return ResponseEntity.status(HttpStatus.OK).body(service.getAllUsers());
+    public List<User> getAllUsers() {
+        return service.getAllUsers();
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<User> getUserById(@PathVariable Long id) {
-        return ResponseEntity.status(HttpStatus.OK).body(service.getUserById(id));
+    public User getUserById(@PathVariable Long id) {
+        return service.getUserById(id);
     }
 
     @PutMapping("/{id}/friends/{friendId}")
-    public ResponseEntity<User> addFriend(@PathVariable Long id, @PathVariable Long friendId) {
-        return ResponseEntity.status(HttpStatus.OK).body(service.addFriend(id, friendId));
+    public User addFriend(@PathVariable Long id, @PathVariable Long friendId) {
+        return service.addFriend(id, friendId);
     }
 
     @DeleteMapping("/{id}/friends/{friendId}")
-    public ResponseEntity<User> deleteFriend(@PathVariable Long id, @PathVariable Long friendId) {
-        return ResponseEntity.status(HttpStatus.OK).body(service.deleteFriend(id, friendId));
+    public User deleteFriend(@PathVariable Long id, @PathVariable Long friendId) {
+        return service.deleteFriend(id, friendId);
     }
 
     @GetMapping("/{id}/friends")
-    public ResponseEntity<List<User>> getUserFriends(@PathVariable Long id) {
-        return ResponseEntity.status(HttpStatus.OK).body(service.getUserFriends(id));
+    public List<User> getUserFriends(@PathVariable Long id) {
+        return service.getUserFriends(id);
     }
 
     @GetMapping("/{id}/friends/common/{otherId}")
-    public ResponseEntity<List<User>> getCommonFriends(@PathVariable Long id, @PathVariable Long otherId) {
-        return ResponseEntity.status(HttpStatus.OK).body(service.getCommonFriends(id, otherId));
+    public List<User> getCommonFriends(@PathVariable Long id, @PathVariable Long otherId) {
+        return service.getCommonFriends(id, otherId);
     }
 }

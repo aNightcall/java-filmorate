@@ -27,39 +27,39 @@ public class FilmController {
     }
 
     @PostMapping
-    public ResponseEntity<Film> addFilm(@Valid @RequestBody Film film) {
-        return ResponseEntity.status(HttpStatus.OK).body(service.addFilm(film));
+    public Film addFilm(@Valid @RequestBody Film film) {
+        return service.addFilm(film);
     }
 
     @PutMapping
-    public ResponseEntity<Film> updateFilm(@Valid @RequestBody Film film) {
-        return ResponseEntity.status(HttpStatus.OK).body(service.updateFilm(film));
+    public Film updateFilm(@Valid @RequestBody Film film) {
+        return service.updateFilm(film);
     }
 
     @GetMapping
-    public ResponseEntity<List<Film>> getAllFilms() {
-        return ResponseEntity.status(HttpStatus.OK).body(service.getAllFilms());
+    public List<Film> getAllFilms() {
+        return service.getAllFilms();
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Film> getFilmById(@PathVariable Long id) {
-        return ResponseEntity.status(HttpStatus.OK).body(service.getFilmById(id));
+    public Film getFilmById(@PathVariable Long id) {
+        return service.getFilmById(id);
     }
 
     @PutMapping("/{id}/like/{userId}")
-    public ResponseEntity<Film> addLike(@PathVariable Long id, @PathVariable Long userId) {
-        return ResponseEntity.status(HttpStatus.OK).body(service.addLike(id, userId));
+    public Film addLike(@PathVariable Long id, @PathVariable Long userId) {
+        return service.addLike(id, userId);
     }
 
     @DeleteMapping("/{id}/like/{userId}")
-    public ResponseEntity<Film> deleteLike(@PathVariable Long id, @PathVariable Long userId) {
-        return ResponseEntity.status(HttpStatus.OK).body(service.deleteLike(id, userId));
+    public Film deleteLike(@PathVariable Long id, @PathVariable Long userId) {
+        return service.deleteLike(id, userId);
     }
 
     @GetMapping("/popular")
-    public ResponseEntity<List<Film>> getPopularFilms(
+    public List<Film> getPopularFilms(
             @RequestParam(defaultValue = "10", required = false) Integer count
     ) {
-        return ResponseEntity.status(HttpStatus.OK).body(service.getPopularFilms(count));
+        return service.getPopularFilms(count);
     }
 }
